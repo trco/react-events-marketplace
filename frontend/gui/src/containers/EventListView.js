@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Event from '../components/Event'
 
-class EventList extends Component {
+class EventListView extends Component {
 
   constructor(props) {
     super(props);
@@ -30,4 +30,4 @@ class EventList extends Component {
   }
 }
 
-export default EventList;
+export default EventListView;

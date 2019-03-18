@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Card, CardImg, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 
 const margin2em = {
-  'margin-bottom': '2em'
+  'marginBottom': '2em'
 };
 
 const Event = ({ data }) => {

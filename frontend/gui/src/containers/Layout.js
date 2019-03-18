@@ -8,7 +8,7 @@ const padding0 = {
 };
 
 const margin2em = {
-  'margin-bottom': '2em'
+  'marginBottom': '2em'
 };
 
 const CustomLayout = ({ children }) => {
@@ -22,9 +22,7 @@ const CustomLayout = ({ children }) => {
           </Row>
         </Container>
         <Container fluid={false}>
-          <Row style={margin2em}>
-            {children}
-          </Row>
+          {children}
         </Container>
       </div>
     );
