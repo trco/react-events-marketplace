@@ -28,7 +28,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'eventsreact.urls'
+ROOT_URLCONF = 'setup.urls'
 
 TEMPLATES = [
     {
@@ -46,7 +46,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eventsreact.wsgi.application'
+WSGI_APPLICATION = 'setup.wsgi.application'
 
 DATABASES = {
     'default': {
