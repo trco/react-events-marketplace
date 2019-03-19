@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import Event from '../components/Event'
 
-class EventListView extends Component {
+class EventListView extends React.Component {
 
   constructor(props) {
     super(props);

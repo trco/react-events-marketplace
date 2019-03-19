@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
-import BaseRouter from './routes';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import CustomLayout from './containers/Layout';
+import Router from './routes';
+import CustomLayout from './containers/CustomLayout';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Router>
+        {/* BrowserRouter should wrap other elements */}
+        <BrowserRouter>
           <CustomLayout>
-            {/* BaseRouter evaluates all the routes in routes.js & renders the component related with the route we are on */}
-            <BaseRouter />
+            {/* Router evaluates all the routes in routes.js & renders the component related with the route we are on */}
+            <Router />
           </CustomLayout>
-        </Router>
+        </BrowserRouter>
       </div>
     );
   }

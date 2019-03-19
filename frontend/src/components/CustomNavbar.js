@@ -1,14 +1,8 @@
-import React, { Component } from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink } from 'reactstrap';
+import React from 'react';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand,
+         Nav, NavItem, NavLink } from 'reactstrap';
 
-class CustomNavbar extends Component {
+class CustomNavbar extends React.Component {
 
   constructor(props) {
     super(props);
