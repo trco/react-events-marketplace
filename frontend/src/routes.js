@@ -8,7 +8,7 @@ import EventDetailView from './containers/EventDetailView';
 const Router = () => (
   <Row>
     <Route exact path='/' component={EventListView} />
-    <Route exact path='/:eventID' component={EventDetailView} />
+    <Route exact path='/event/:eventID' component={EventDetailView} />
   </Row>
 );
 
