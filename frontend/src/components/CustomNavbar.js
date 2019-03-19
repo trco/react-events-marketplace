@@ -21,19 +21,19 @@ class CustomNavbar extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">events-react</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#">Add event</NavLink>
+                <NavLink href="#">Create event</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+      </>
     );
   }
 }

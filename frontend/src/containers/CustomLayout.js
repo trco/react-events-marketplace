@@ -13,7 +13,7 @@ const margin2em = {
 
 const CustomLayout = ({ children }) => {
     return (
-      <div>
+      <>
         <Container fluid={true} style={margin2em}>
           <Row>
             <Col style={padding0}>
@@ -24,7 +24,7 @@ const CustomLayout = ({ children }) => {
         <Container fluid={false}>
           {children}
         </Container>
-      </div>
+      </>
     );
 }
 
