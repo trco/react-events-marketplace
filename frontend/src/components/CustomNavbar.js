@@ -28,7 +28,7 @@ class CustomNavbar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#">Create event</NavLink>
+                <NavLink href="/create">Create event</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

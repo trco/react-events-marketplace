@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { Col } from 'reactstrap';
 
 import Events from '../components/Events';
-import EventForm from '../components/EventForm';
 
 class EventListView extends React.Component {
 
@@ -27,17 +25,7 @@ class EventListView extends React.Component {
   render() {
     const events = this.state.events;
     return (
-      <>
-        <Events data={events} />
-        <Col xs="12" md="6">
-          <h2>Create Event</h2>
-          <EventForm
-            requestMethod="post"
-            eventID={null}
-            btnText="Create"
-          />
-        </Col>
-      </>
+      <Events data={events} />
     );
   }
 }

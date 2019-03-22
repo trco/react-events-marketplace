@@ -2,8 +2,6 @@ import React from 'react';
 import { Col, Button } from 'reactstrap';
 import axios from 'axios';
 
-import EventForm from '../components/EventForm';
-
 class EventDetailView extends React.Component {
 
   constructor(props) {
@@ -40,12 +38,6 @@ class EventDetailView extends React.Component {
           <p>{event.description}</p>
         </Col>
         <Col xs="12" md="6">
-          <h2>Update Event</h2>
-          <EventForm
-            requestMethod="put"
-            eventID={event.id}
-            btnText="Update"
-          />
           <form onSubmit={this.handleDelete}>
             <Button htmltype="submit">Delete</Button>
           </form>

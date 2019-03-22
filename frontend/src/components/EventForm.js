@@ -4,8 +4,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class EventForm extends React.Component {
 
-  handleFormSubmit = (event, requestMethod, eventID) => {
-    const title = event.target.elements.title.value;
+  handleFormSubmit = (e, requestMethod, event, eventID) => {
+    const title = e.target.elements.title.value;
 
     switch (requestMethod) {
       case 'post':
@@ -13,21 +13,22 @@ class EventForm extends React.Component {
           title: title
         })
         .then(res => console.log(res))
-        .catch(error => console.err(error));
+        .catch(error => console.log(error));
       case 'put':
         return axios.put(`http://127.0.0.1:8000/api/${eventID}/`, {
           title: title
         })
         .then(res => console.log(res))
-        .catch(error => console.err(error));
+        .catch(error => console.log(error));
     }
   }
 
   render() {
     return (
-      <Form onSubmit={(event) => this.handleFormSubmit(
-        event,
+      <Form onSubmit={(e) => this.handleFormSubmit(
+        e,
         this.props.requestMethod,
+        this.props.event,
         this.props.eventID
       )}>
         <FormGroup>
@@ -36,6 +37,7 @@ class EventForm extends React.Component {
             type="text"
             name="title"
             id="id_title"
+            defaultValue={this.props.event != null ? this.props.event.title : null}
             placeholder="Title" />
         </FormGroup>
         <Button htmltype="submit">{this.props.btnText}</Button>
