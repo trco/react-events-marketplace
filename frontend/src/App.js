@@ -1,23 +1,19 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import Router from './routes';
-import CustomLayout from './containers/CustomLayout';
+import EventListView from './containers/EventListView';
+import EventDetailView from './containers/EventDetailView';
+import Navbar from './components/Navbar';
+import EventForm from './components/EventForm';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        {/* BrowserRouter should wrap other elements */}
-        <BrowserRouter>
-          <CustomLayout>
-            {/* Router evaluates all the routes in routes.js & renders the component related with the route we are on */}
-            <Router />
-          </CustomLayout>
-        </BrowserRouter>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div>
+    <Navbar />
+    <Route exact path='/' component={EventListView} />
+    <Route exact path='/event/:eventID' component={EventDetailView} />
+    <Route exact path='/create' component={EventForm} />
+    <Route exact path='/update/:eventID' component={EventForm} />
+  </div>
+);
 
 export default App;
