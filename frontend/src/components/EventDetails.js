@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-class EventDetailView extends React.Component {
+class EventDetails extends React.Component {
 
   state = {
     event: {}
@@ -39,4 +39,4 @@ class EventDetailView extends React.Component {
   }
 }
 
-export default EventDetailView;
+export default EventDetails;
