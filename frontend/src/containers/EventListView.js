@@ -5,11 +5,8 @@ import Events from '../components/Events';
 
 class EventListView extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      events: []
-    };
+  state = {
+    events: []
   }
 
   componentDidMount() {

@@ -1,14 +1,10 @@
 import React from 'react';
-import { Col, Button } from 'reactstrap';
 import axios from 'axios';
 
 class EventDetailView extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      event: {}
-    };
+  state = {
+    event: {}
   }
 
   componentDidMount() {
@@ -32,17 +28,13 @@ class EventDetailView extends React.Component {
   render() {
     const event = this.state.event;
     return (
-      <>
-        <Col>
-          <h1>{event.title}</h1>
-          <p>{event.description}</p>
-        </Col>
-        <Col xs="12" md="6">
-          <form onSubmit={this.handleDelete}>
-            <Button htmltype="submit">Delete</Button>
-          </form>
-        </Col>
-      </>
+      <div>
+        <h1>{event.title}</h1>
+        <p>{event.description}</p>
+        {/* <form onSubmit={this.handleDelete}>
+          <Button htmltype="submit">Delete</Button>
+        </form> */}
+      </div>
     );
   }
 }

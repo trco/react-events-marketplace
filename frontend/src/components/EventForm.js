@@ -1,49 +1,117 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class EventForm extends React.Component {
 
-  handleFormSubmit = (e, requestMethod, event, eventID) => {
-    const title = e.target.elements.title.value;
+  state = {
+    event: {},
+    eventID: 0,
+    fields : {
+      title: '',
+    },
+    fieldErrors: {}
+  }
+
+  componentDidMount() {
+    // match is passed to this.props from <Route />
+    // params contains the dynamic parts of the route's path as key/value pairs
+    const eventID = this.props.match.params.eventID;
+    if (eventID) {
+      axios.get(`http://127.0.0.1:8000/api/${eventID}/`)
+        .then(res => {
+          this.setState({
+            event: res.data,
+            eventID: eventID,
+            fields: res.data
+          });
+        });
+    }
+  };
+
+  handleFormSubmit = () => {
+    const requestMethod = this.state.eventID ? "put" : "post";
+    console.log(requestMethod);
 
     switch (requestMethod) {
       case 'post':
         return axios.post('http://127.0.0.1:8000/api/', {
-          title: title
+          title: this.state.fields.title
         })
         .then(res => console.log(res))
         .catch(error => console.log(error));
       case 'put':
-        return axios.put(`http://127.0.0.1:8000/api/${eventID}/`, {
-          title: title
+        return axios.put(`http://127.0.0.1:8000/api/${this.state.eventID}/`, {
+          title: this.state.fields.title
         })
         .then(res => console.log(res))
         .catch(error => console.log(error));
     }
   }
 
+  onInputChange = ({ name, value, error }) => {
+    const fields = Object.assign({}, this.state.fields);
+    const fieldErrors = Object.assign({}, this.state.fieldErrors);
+
+    fields[name] = value;
+    fieldErrors[name] = error;
+
+    this.setState({ fields, fieldErrors });
+    console.log(this.state.fields);
+  }
+
   render() {
     return (
-      <Form onSubmit={(e) => this.handleFormSubmit(
-        e,
-        this.props.requestMethod,
-        this.props.event,
-        this.props.eventID
-      )}>
-        <FormGroup>
-          <Label for="title">Title</Label>
-          <Input
-            type="text"
-            name="title"
-            id="id_title"
-            defaultValue={this.props.event != null ? this.props.event.title : null}
-            placeholder="Title" />
-        </FormGroup>
-        <Button htmltype="submit">{this.props.btnText}</Button>
-      </Form>
+      <div>
+        <form onSubmit={this.handleFormSubmit}>
+          <Field
+            placeholder='Title'
+            name='title'
+            value={this.state.fields.title}
+            // validate={value => value ? false : 'Title is required.'}
+            onChange={this.onInputChange}
+          />
+          <input type='submit'/>
+        </form>
+      </div>
     );
   }
 }
 
 export default EventForm;
+
+class Field extends React.Component {
+
+  state = {
+    value: this.props.value,
+    error: false
+  }
+
+  // Enables clearing of the fields after successful submission
+  static getDerivedStateFromProps(nextProps) {
+    return { value: nextProps.value }
+  }
+
+  onChange = (evt) => {
+    const name = this.props.name;
+    const value = evt.target.value;
+    const error = this.props.validate ? this.props.validate(value) : false;
+
+    this.setState({ value, error });
+
+    // Pass values to the form onInputChange
+    this.props.onChange({ name, value, error });
+  }
+
+  render() {
+    return (
+      <>
+        <input
+          placeholder={this.props.placeholder}
+          value={this.state.value}
+          onChange={this.onChange}
+        />
+        <span style={{ color: 'red' }}>{this.state.error}</span>
+      </>
+    )
+  }
+}
