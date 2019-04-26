@@ -10,9 +10,9 @@ const App = () => (
   <div>
     <Navbar />
     <Route exact path='/' component={Events} />
-    <Route exact path='/event/:eventID' component={EventDetails} />
+    <Route exact path='/event/:eventId' component={EventDetails} />
     <Route exact path='/create' component={EventForm} />
-    <Route exact path='/update/:eventID' component={EventForm} />
+    <Route exact path='/update/:eventId' component={EventForm} />
   </div>
 );
 

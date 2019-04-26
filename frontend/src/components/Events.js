@@ -20,7 +20,7 @@ class Events extends React.Component {
   render() {
     const events = this.state.events;
     return (
-      events.map(event => <Event data={event} key={event.id} />)
+      events.map((event) => <Event data={event} key={event.id} />)
     );
   }
 }
