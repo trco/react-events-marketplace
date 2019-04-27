@@ -19,21 +19,12 @@ class EventDetails extends React.Component {
       });
   };
 
-  handleDelete = (event) => {
-    const eventId = this.props.match.params.eventId;
-    axios.delete(`http://127.0.0.1:8000/api/${eventId}/`);
-    this.props.history.push('/');
-  }
-
   render() {
     const event = this.state.event;
     return (
       <div>
         <h1>{event.title}</h1>
         <p>{event.description}</p>
-        {/* <form onSubmit={this.handleDelete}>
-          <Button htmltype="submit">Delete</Button>
-        </form> */}
       </div>
     );
   }

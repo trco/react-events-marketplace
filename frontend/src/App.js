@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import axios from 'axios';
+
+import { Route, Redirect } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Events from './components/Events';

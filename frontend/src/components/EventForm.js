@@ -17,7 +17,7 @@ class EventForm extends React.Component {
     // Match is passed to this.props from <Route />
     // Params contains the dynamic parts of the route's path as key/value pairs
     const eventId = this.props.match.params.eventId;
-    if (eventId) {
+    if (eventId ) {
       axios.get(`http://127.0.0.1:8000/api/${eventId}/`)
         .then(res => {
           this.setState({
@@ -76,16 +76,16 @@ class EventForm extends React.Component {
   }
 
   validateTitle = (value) => {
-    if (value.length < 7 && value.length !== 0)
-      return 'Title should be at least 8 characters long.';
+    if (value.length < 4 && value.length !== 0)
+      return 'Title should be at least 4 characters long.';
     if (!value)
       return 'Title is required.';
     return false;
   }
 
   validateDescription = (value) => {
-    if (value.length < 16 && value.length !== 0)
-      return 'Description should be at least 16 characters long.';
+    if (value.length < 4 && value.length !== 0)
+      return 'Description should be at least 4 characters long.';
     if (!value)
       return 'Description is required.';
     return false;
