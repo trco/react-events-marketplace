@@ -7,12 +7,10 @@ class EventForm extends React.Component {
     eventId: null,
     fields : {
       title: '',
+      description: ''
     },
-    fieldChanged: {},
-    fieldErrors: {
-      title: 'Title is required.',
-    },
-    submitted: false
+    fieldsErrors: {},
+    formIsValid: false
   }
 
   componentDidMount() {
@@ -31,10 +29,12 @@ class EventForm extends React.Component {
   };
 
   validate = () => {
-    const fieldErrors = this.state.fieldErrors;
-    // Check keys in fieldErrors & construct new array if key has value
-    const errMessages = Object.keys(fieldErrors).filter((key) => fieldErrors[key]);
+    const fieldsErrors = this.state.fieldsErrors;
+    // Check keys in fieldsErrors & construct new array if key has value
+    const errMessages = Object.keys(fieldsErrors).filter((key) => fieldsErrors[key]);
 
+    if (!this.state.fields.title) return true;
+    if (!this.state.fields.description) return true;
     // Check if errors present
     if (errMessages.length) return true;
 
@@ -42,50 +42,52 @@ class EventForm extends React.Component {
   }
 
   handleFormSubmit = (evt) => {
-    evt.preventDefault();
-
-    // Show fieldErrors if present
-    if (this.validate()) {
-      const fieldErrors = this.state.fieldErrors;
-      this.setState({ fieldErrors, submitted: true });
-      return;
-    }
-
     const requestMethod = this.state.eventId ? "put" : "post";
 
     switch (requestMethod) {
       case 'post':
         return axios.post('http://127.0.0.1:8000/api/', {
-          title: this.state.fields.title
+          title: this.state.fields.title,
+          description: this.state.fields.description
         })
         .then(res => console.log(res))
         .catch(error => console.log(error));
       case 'put':
         return axios.put(`http://127.0.0.1:8000/api/${this.state.eventId}/`, {
-          title: this.state.fields.title
+          title: this.state.fields.title,
+          description: this.state.fields.description
         })
         .then(res => console.log(res))
         .catch(error => console.log(error));
     }
   }
 
-  onInputChange = ({ name, value, error }) => {
+  onChange = ({ name, value, error }) => {
     const fields = Object.assign({}, this.state.fields);
-    const fieldChanged = Object.assign({}, this.state.fieldChanged);
-    const fieldErrors = Object.assign({}, this.state.fieldErrors);
+    const fieldsErrors = Object.assign({}, this.state.fieldsErrors);
 
     fields[name] = value;
-    fieldChanged[name] = true;
-    fieldErrors[name] = error;
+    fieldsErrors[name] = error;
 
-    this.setState({ fields, fieldChanged, fieldErrors });
+    this.setState({
+      fields,
+      fieldsErrors
+    });
   }
 
   validateTitle = (value) => {
-    if (value.length < 7 && value.length != 0)
+    if (value.length < 7 && value.length !== 0)
       return 'Title should be at least 8 characters long.';
     if (!value)
       return 'Title is required.';
+    return false;
+  }
+
+  validateDescription = (value) => {
+    if (value.length < 16 && value.length !== 0)
+      return 'Description should be at least 16 characters long.';
+    if (!value)
+      return 'Description is required.';
     return false;
   }
 
@@ -98,15 +100,21 @@ class EventForm extends React.Component {
             placeholder='Title'
             name='title'
             value={this.state.fields.title}
+            error={this.state.fieldsErrors.title}
             validate={this.validateTitle}
-            onChange={this.onInputChange}
+            onChange={this.onChange}
           />
-          <span style={{ color: 'red' }}>{
-            this.state.submitted || this.state.fieldChanged.title ?
-            this.state.fieldErrors.title :
-            false
-          }</span>
-          <input type='submit'/>
+          <br/>
+          <Field
+            placeholder='Description'
+            name='description'
+            value={this.state.fields.description}
+            error={this.state.fieldsErrors.description}
+            validate={this.validateDescription}
+            onChange={this.onChange}
+          />
+          <br/>
+          <input type='submit' disabled={this.validate()} />
         </form>
       </div>
     );
@@ -115,11 +123,12 @@ class EventForm extends React.Component {
 
 export default EventForm;
 
+// Controlled component: value is saved in state everytime it changes
 class Field extends React.Component {
 
   state = {
     value: this.props.value,
-    error: false
+    error: this.props.error
   }
 
   // Enables clearing of the fields after successful submission
@@ -132,7 +141,7 @@ class Field extends React.Component {
     const value = evt.target.value;
     // Validate field when changed
     const error = this.props.validate ? this.props.validate(value) : false;
-    // Pass values to the form onInputChange and build fieldErrors
+    // Pass values to the form onChange and build fieldsErrors
     this.props.onChange({ name, value, error });
 
     this.setState({ value, error });
@@ -146,6 +155,9 @@ class Field extends React.Component {
           value={this.state.value}
           onChange={this.onChange}
         />
+        <span style={{ color: 'red' }}>
+          {this.state.error}
+        </span>
       </>
     )
   }
